@@ -16,14 +16,12 @@ import java.util.ArrayList;
 public class Controller {
     private Logger log = LoggerFactory.getLogger(Controller.class);
 
-    private JSONObject jsonObject;
     private String region;
     private Crawler crawler;
 
     public Controller(String region, Crawler crawler) {
         this.region = region;
         this.crawler = crawler;
-        jsonObject = new JSONObject();
     }
 
     public void crawling() {
@@ -34,19 +32,19 @@ public class Controller {
             ArrayList<Restaurant> restaurantList = crawler.searchRestaurantByLocalName(region);
 
             csvFileOutput.makeFile(restaurantList);
-
-            makeJsonObject(restaurantList);
-            jsonFileOutPut.makeFile(jsonObject.toString());
+            jsonFileOutPut.makeFile(makeJsonObject(restaurantList).toString());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void makeJsonObject(ArrayList<Restaurant> restaurantList) {
+    private JSONObject makeJsonObject(ArrayList<Restaurant> restaurantList) {
+        JSONObject jsonObject =  new JSONObject();
         JSONArray jsonArray = new JSONArray();
 
         jsonArray.put(restaurantList);
         jsonObject.put("item", jsonArray);
+        return jsonObject;
     }
 }
