@@ -1,4 +1,7 @@
+package com.woowa.fileout;
+
 import au.com.bytecode.opencsv.CSVWriter;
+import com.woowa.model.Restaurant;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,23 +11,21 @@ import java.util.Iterator;
 /**
  * Created by woowabrothers on 2017. 8. 3..
  */
-public class CSVMaker {
+public class CSVFileOutput implements FileOutput<ArrayList>{
     private String filename;
 
-    public CSVMaker(String filename) {
-        this.filename = filename;
+    public CSVFileOutput(String filename) {
+        this.filename = filename + ".csv";
     }
 
-    public CSVMaker(FileWriter fileWriter) {}
-
-    public void makeCSV(ArrayList<String[]> data) {
+    public void makeFile(ArrayList data) {
         try {
             CSVWriter cw = new CSVWriter(new FileWriter(filename), '|', CSVWriter.NO_QUOTE_CHARACTER);
             Iterator it = data.iterator();
             try {
                 while (it.hasNext()) {
-                    String[] s = (String[]) it.next();
-                    cw.writeNext(s);
+                    Restaurant s = (Restaurant) it.next();
+                    cw.writeNext(s.toStringArray());
                 }
             } finally {
                 cw.close();
@@ -33,5 +34,4 @@ public class CSVMaker {
             e.printStackTrace();
         }
     }
-
 }
