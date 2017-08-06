@@ -28,10 +28,11 @@ public class DiningcodeCrawler implements Crawler {
         while (true) {
             try {
                 if (page == 10) break;
-                logger.info("------"+page + "번째 페이지 크롤링입니다.------");
-
-
                 String url = DININGCODE_URL + "list.php?page=" + page + "&chunk=10&query=" + localName + "";
+
+                logger.info("------"+page + "번째 페이지 크롤링입니다.------");
+                logger.debug("page URL : "+url);
+
                 doc = Jsoup.connect(url).get();
                 restaurantDetailUrlList = doc.select(".dc-restaurant-name");
 
@@ -61,6 +62,9 @@ public class DiningcodeCrawler implements Crawler {
     private Restaurant getRestaurant(String restaurantCode) throws IOException {
         String url = DININGCODE_URL + restaurantCode;
         Document doc = Jsoup.connect(url).get();
+
+        logger.info("====================식당===============================");
+        logger.info("식당 URL : "+url);
 
         String restaurantName = getRestaurantName(doc);
         String restaurantAddress = getRestaurantAddress(doc);
@@ -131,7 +135,6 @@ public class DiningcodeCrawler implements Crawler {
     }
 
     private void logging(String restaurantName, String restaurantAddress, String restaurantTel, String restaurantPictureUrl, String restaurantDescription, String restaurantWorkingTime) {
-        logger.info("====================식당===============================");
         logger.info("이름 : "+restaurantName);
         logger.info("주소 : "+restaurantAddress);
         logger.info("전화번호 : "+restaurantTel);
