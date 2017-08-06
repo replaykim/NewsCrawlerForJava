@@ -18,11 +18,3 @@ public class Application {
         controller.crawling();
     }
 }
-
-
-//restaurantInfo[0] = restaurantName;
-//        restaurantInfo[1] = restaurantAddress;
-//        restaurantInfo[2] = restaurantTel;
-//        restaurantInfo[3] = restaurantPictureUrl;
-//        restaurantInfo[4] = restaurantDescription;
-//        restaurantInfo[5] = restaurantRunningWeekDay + restaurantRunningTime;
